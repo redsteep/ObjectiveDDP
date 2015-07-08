@@ -1,7 +1,9 @@
 #import "ObjectiveDDP.h"
 #import "DependencyProvider.h"
 
-@implementation ObjectiveDDP
+@implementation ObjectiveDDP {
+    dispatch_queue_t _delegateDispatchQueue;
+}
 
 - (id)initWithURLString:(NSString *)urlString
                delegate:(id <ObjectiveDDPDelegate>)delegate {
@@ -86,6 +88,10 @@
     [self.webSocket send:json];
 }
 
+- (void)setDelegateDispatchQueue:(dispatch_queue_t)queue {
+    _delegateDispatchQueue = queue;
+}
+
 #pragma mark - Internal 
 
 - (NSString *)_buildJSONWithFields:(NSDictionary *)fields parameters:(NSArray *)parameters {
@@ -101,6 +107,10 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     self.webSocket = [[DependencyProvider sharedProvider] provideSRWebSocketWithRequest:request];
     self.webSocket.delegate = self;
+    
+    if (_delegateDispatchQueue) {
+        [self.webSocket setDelegateDispatchQueue:_delegateDispatchQueue];
+    }
 }
 
 - (void)_closeConnection {

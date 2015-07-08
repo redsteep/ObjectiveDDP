@@ -21,6 +21,8 @@
 - (void)unsubscribeWith:(NSString *)id;
 - (void)methodWithId:(NSString *)id method:(NSString *)method parameters:(NSArray *)parameters;
 
+- (void)setDelegateDispatchQueue:(dispatch_queue_t)queue;
+
 @end
 
 @protocol ObjectiveDDPDelegate
