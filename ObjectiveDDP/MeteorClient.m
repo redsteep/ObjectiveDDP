@@ -459,6 +459,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 - (void)_setAuthStatetoLoggedOut {
     self.authState = AuthStateLoggedOut;
     self.userId = nil;
+    self.sessionToken = nil;
 }
 
 - (NSDictionary *)_buildUserParametersSignup:(NSString *)username email:(NSString *)email password:(NSString *)password fullname:(NSString *) fullname
