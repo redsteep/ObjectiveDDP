@@ -41,6 +41,7 @@ double const MeteorClientMaxRetryIncrease = 6;
         } else {
             _supportedVersions = @[@"pre2", @"pre1"];
         }
+        _autoreconnect = YES;
     }
     return self;
 }
@@ -405,12 +406,14 @@ double const MeteorClientMaxRetryIncrease = 6;
         return;
     }
 //
-    double timeInterval = 5.0 * _tries;
-    
-    if (_tries != _maxRetryIncrement) {
-        _tries++;
+    if (self.autoreconnect) {
+        double timeInterval = 5.0 * _tries;
+        
+        if (_tries != _maxRetryIncrement) {
+            _tries++;
+        }
+        [self performSelector:@selector(reconnect) withObject:self afterDelay:timeInterval];
     }
-    [self performSelector:@selector(reconnect) withObject:self afterDelay:timeInterval];
 }
 
 - (void)_invalidateUnresolvedMethods {
