@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2012 Brandon McQuilkin
+ Copyright (c) 2014 Brandon McQuilkin
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  
@@ -16,32 +16,32 @@
 #pragma mark - Creation
 
 + (id)orderedDictionary{
-    return [[M13OrderedDictionary alloc] init];
+    return [[[self class] alloc] init];
 }
 
 + (id)orderedDictionaryWithOrderedDictionary:(M13OrderedDictionary *)orderedDictionary
 {
-    return [[M13OrderedDictionary alloc] initWithOrderedDictionary:orderedDictionary];
+    return [[[self class] alloc] initWithOrderedDictionary:orderedDictionary];
 }
 
 + (id)orderedDictionaryWithContentsOfFile:(NSString *)path
 {
-    return [[M13OrderedDictionary alloc] initWithContentsOfFile:path];
+    return [[[self class] alloc] initWithContentsOfFile:path];
 }
 
 + (id)orderedDictionaryWithContentsOfURL:(NSURL *)URL
 {
-    return [[M13OrderedDictionary alloc] initWithContentsOfURL:URL];
+    return [[[self class] alloc] initWithContentsOfURL:URL];
 }
 
 + (id)orderedDictionaryWithObject:(id)anObject pairedWithKey:(id<NSCopying>)aKey
 {
-    return [[M13OrderedDictionary alloc] initWithObjects:[NSArray arrayWithObject:anObject] pairedWithKeys:[NSArray arrayWithObject:aKey]];
+    return [[[self class] alloc] initWithObjects:[NSArray arrayWithObject:anObject] pairedWithKeys:[NSArray arrayWithObject:aKey]];
 }
 
 + (id)orderedDictionaryWithDictionary:(NSDictionary *)entrys
 {
-    return [[M13OrderedDictionary alloc] initWithContentsOfDictionary:entrys];
+    return [[[self class] alloc] initWithContentsOfDictionary:entrys];
 }
 
 #pragma mark - initialization
@@ -186,6 +186,11 @@
 - (NSDictionary *)unorderedEntriesAtIndices:(NSIndexSet *)indexes
 {
     return [NSDictionary dictionaryWithObjects:[objects objectsAtIndexes:indexes] forKeys:[keys objectsAtIndexes:indexes]];
+}
+
+- (NSDictionary *)unorderedDictionary
+{
+    return [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 }
 
 - (NSArray *)allKeys
@@ -415,9 +420,9 @@
     return [keys objectsAtIndexes:[objects indexesOfObjectsAtIndexes:indexSet options:opts passingTest:predicate]];
 }
 
-#pragma mark - Preforming Selectors
+#pragma mark - Performing Selectors
 
-- (void)makeObjectsPreformSelector:(SEL)aSelector
+- (void)makeObjectsPerformSelector:(SEL)aSelector
 {
     [objects makeObjectsPerformSelector:aSelector];
 }
@@ -879,7 +884,7 @@
 
 + (id)orderedDictionaryWithCapacity:(NSUInteger)numEntrys
 {
-    return [[M13MutableOrderedDictionary alloc] initWithCapacity:numEntrys];
+    return [[[self class] alloc] initWithCapacity:numEntrys];
 }
 
 - (id)initWithCapacity:(NSUInteger)numEntrys
@@ -1036,22 +1041,33 @@
 
 - (void)removeLastEntry
 {
-    [self removeEntryAtIndex:(keys.count - 1)];
+    if (keys.count > 0) {
+        [self removeEntryAtIndex:(keys.count - 1)];
+    }
 }
 
 - (void)removeEntryWithObject:(id)object
 {
-    [self removeEntryAtIndex:[self indexOfObject:object]];
+    NSUInteger index = [self indexOfObject:object];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntryWithKey:(id<NSCopying>)key
 {
-    [self removeEntryAtIndex:[self indexOfKey:key]];
+    NSUInteger index = [self indexOfKey:key];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntryWithObject:(id)object pairedWithKey:(id<NSCopying>)key
 {
-    [self removeEntryAtIndex:[self indexOfEntryWithObject:object pairedWithKey:key]];
+    NSUInteger index = [self indexOfEntryWithObject:object pairedWithKey:key];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntry:(NSDictionary *)entry
@@ -1061,22 +1077,34 @@
 
 - (void)removeEntryWithObject:(id)object inRange:(NSRange)range
 {
-    [self removeEntryAtIndex:[self indexOfObject:object inRange:range]];
+    NSUInteger index = [self indexOfObject:object inRange:range];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntryWithKey:(id<NSCopying>)key inRange:(NSRange)range
 {
-    [self removeEntryAtIndex:[self indexOfKey:key inRange:range]];
+    NSUInteger index = [self indexOfKey:key inRange:range];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
-- (void)removeEntryWithObject:(id)object pairedWithKey:(id<NSCopying>)key inRange:(NSRange)ramge
+- (void)removeEntryWithObject:(id)object pairedWithKey:(id<NSCopying>)key inRange:(NSRange)range
 {
-    [self removeEntryAtIndex:[self indexOfEntryWithObject:object pairedWithKey:key inRange:ramge]];
+    NSUInteger index = [self indexOfEntryWithObject:object pairedWithKey:key inRange:range];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntry:(NSDictionary *)entry inRange:(NSRange)range
 {
-    [self removeEntryAtIndex:[self indexOfEntry:entry inRange:range]];
+    NSUInteger index = [self indexOfEntry:entry inRange:range];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntryAtIndex:(NSUInteger)index
@@ -1097,12 +1125,18 @@
 
 - (void)removeEntryWithObjectIdenticalTo:(id)anObject
 {
-    [self removeEntryAtIndex:[self indexOfObjectIdenticalTo:anObject]];
+    NSUInteger index = [self indexOfObjectIdenticalTo:anObject];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntryWithObjectIdenticalTo:(id)anObject inRange:(NSRange)range
 {
-    [self removeEntryAtIndex:[self indexOfObjectIdenticalTo:anObject inRange:range]];
+    NSUInteger index = [self indexOfObjectIdenticalTo:anObject inRange:range];
+    if (index != NSNotFound) {
+        [self removeEntryAtIndex:index];
+    }
 }
 
 - (void)removeEntriesWithObjectsInArray:(NSArray *)array
@@ -1233,12 +1267,13 @@
     NSMutableArray *testObj = [[NSMutableArray alloc] initWithArray:objects];
     NSMutableArray *testKey = [[NSMutableArray alloc] initWithArray:keys];
     //Loop through and find first identical object, and  add that key to the array. then delete that pair from the testers so they are not used again. (That way if there is an identical object with a diffrent key, it will get used.)
-    while (testObj.count > 0) {
+    while (testObj.count > 0 && tempObj.count > 0) {
         NSInteger index = [testObj indexOfObjectIdenticalTo:[tempObj objectAtIndex:(tempObj.count - testObj.count)]];
         [tempKey addObject:[testKey objectAtIndex:index]];
         [testKey removeObjectAtIndex:index];
         [testObj removeObjectAtIndex:index];
     }
+    
     return tempKey;
 }
 

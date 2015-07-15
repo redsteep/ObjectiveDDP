@@ -42,7 +42,6 @@
 		570DE62F4BD74C18AE51ED8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1F0C9084EA4B2DBD349673 /* libPods.a */; };
 		888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFB173B6508001EED80 /* MeteorClient.m */; };
 		888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */; };
-		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
 		BB640DE0F8BA274F03ADDF84 /* libPods-ObjectiveDDP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C2BCE4B341D5B1B389A0E7 /* libPods-ObjectiveDDP.a */; };
 		ED43BD310BEA4CD183E8105E /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328562DF57374E8FB55B78B0 /* libPods-Specs.a */; };
 /* End PBXBuildFile section */
@@ -64,7 +63,6 @@
 		052BE033183F8655005CBD6E /* MeteorClient+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MeteorClient+Private.h"; sourceTree = "<group>"; };
 		15654C36C786305476C43A3A /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		194F89D9560FD1856AE79721 /* Pods-ObjectiveDDP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveDDP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ObjectiveDDP/Pods-ObjectiveDDP.debug.xcconfig"; sourceTree = "<group>"; };
-		22BE0B3F1B814D98AAAE26CF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1F0C9084EA4B2DBD349673 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		328562DF57374E8FB55B78B0 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4000D636170E880400296229 /* libObjectiveDDP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveDDP.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,7 +117,6 @@
 				401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */,
 				4000D63A170E880400296229 /* Foundation.framework in Frameworks */,
 				401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */,
-				9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */,
 				BB640DE0F8BA274F03ADDF84 /* libPods-ObjectiveDDP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
