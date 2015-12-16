@@ -6,6 +6,8 @@ extern NSString * const MeteorClientConnectionReadyNotification;
 extern NSString * const MeteorClientDidConnectNotification;
 extern NSString * const MeteorClientDidDisconnectNotification;
 
+extern NSString * const MeteorClientDidDisconnectErrorKey;
+
 /** Errors due to transport (connection) problems will have this domain. For errors being reported
     from the backend, they will have the "errorType" key as their error domain. */
 extern NSString * const MeteorClientTransportErrorDomain;
@@ -39,6 +41,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, assign, readonly) AuthState authState;
 @property (nonatomic, copy, readonly) NSString *ddpVersion;
 @property (nonatomic, strong ,readonly) NSArray *supportedVersions;
+@property (nonatomic, strong, readonly) NSError *lastConnectionError;
 
 @property (nonatomic, assign) BOOL autoreconnect;
 

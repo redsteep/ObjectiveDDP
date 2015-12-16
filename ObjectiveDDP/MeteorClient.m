@@ -9,6 +9,8 @@ NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.con
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
+NSString * const MeteorClientDidDisconnectErrorKey = @"boundsj.objectiveddp.disconnected.error";
+
 double const MeteorClientRetryIncreaseBy = 1;
 double const MeteorClientMaxRetryIncrease = 6;
 
@@ -364,6 +366,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (void)didOpen {
+    self.lastConnectionError = nil;
     self.websocketReady = YES;
     [self _resetBackoff];
     [self resetCollections];
@@ -372,11 +375,11 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
-    [self _handleConnectionError];
+    [self _handleConnectionError:error];
 }
 
 - (void)didReceiveConnectionClose {
-    [self _handleConnectionError];
+    [self _handleConnectionError:nil];
 }
 
 #pragma mark - Internal
@@ -396,11 +399,18 @@ double const MeteorClientMaxRetryIncrease = 6;
     _tries = 1;
 }
 
-- (void)_handleConnectionError {
+- (void)_handleConnectionError:(NSError *)error {
+    self.lastConnectionError = error;
     self.websocketReady = NO;
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
+    
+    NSDictionary *userInfo = nil;
+    if (error) {
+        userInfo = @{ MeteorClientDidDisconnectErrorKey: error };
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self userInfo:userInfo];
     if (_disconnecting) {
         _disconnecting = NO;
         return;

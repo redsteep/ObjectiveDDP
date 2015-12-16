@@ -20,6 +20,7 @@
 @property (nonatomic, strong, readwrite) NSMutableDictionary *collections;
 @property (nonatomic, assign, readwrite) BOOL websocketReady;
 @property (nonatomic, assign, readwrite) AuthState authState;
+@property (nonatomic, strong, readwrite) NSError *lastConnectionError;
 
 //xxx: temporary methods to corral state vars
 - (void)_setAuthStateToLoggingIn;
